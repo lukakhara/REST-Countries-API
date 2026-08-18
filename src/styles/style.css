@@ -2,17 +2,17 @@
 
 @font-face {
   font-family: "nunitoSansregular";
-  src: url('public/font/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf');
+  src: url('./font/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf');
   font-weight: 300;
 }
 @font-face {
   font-family: "nunitoSansbold";
-  src: url('public/font/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf');
+  src: url('./font/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf');
   font-weight: 600;
 }
 @font-face {
   font-family: "nunitoSansBoldest";
-  src: url('public/font/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf');
+  src: url('./font/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf');
   font-weight: 800;
 }
 :root {
