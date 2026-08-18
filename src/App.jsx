@@ -11,20 +11,29 @@ function App() {
   // fetching data from the API and setting up state
   // to store countries and other necessary data
   // using useEffect to fetch data on component mount
+  const API_KEY = "rc_live_f437526b20e74c219717530bcc012cc9";
 
   useEffect(() => {
     document.title = "Country Info App";
-    fetch(
-      "https://restcountries.com/v3.1/all?fields=name,population,cca3,capital,flags,languages,currencies,subregion,borders,tld"
-    )
-      .then((response) => response.json())
+    fetch("https://api.restcountries.com/countries/v5?q=all", {
+      headers: { Authorization: `Bearer ${API_KEY}` },
+    })
+      .then((response) => {
+        console.log("status:", response.status);
+        return response.json();
+      })
       .then((allCountries) => {
+        console.log("raw response:", allCountries);
+        if (!allCountries?.data?.objects) {
+          console.error("Unexpected response shape:", allCountries);
+          return;
+        }
         const countryMap = {};
-        allCountries.forEach((country) => {
-          countryMap[country.cca3] = country.name.common;
+        allCountries.data.objects.forEach((country) => {
+          countryMap[country.cca3] = country.names.common;
         });
 
-        const enhancedCountries = allCountries.map((country) => ({
+        const enhancedCountries = allCountries.data.objects.map((country) => ({
           ...country,
           borderNames: country.borders
             ? country.borders.map((code) => countryMap[code] || code)
@@ -45,7 +54,7 @@ function App() {
 
   // Filter countries based on the selected region
   const filteredCountries = countries.filter((country) => {
-    const matchesCountryName = country.name.common
+    const matchesCountryName = country.names.common
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesRegion =

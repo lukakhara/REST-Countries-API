@@ -17,14 +17,16 @@ const Card = ({ filteredCountries, setSelectedCountry }) => {
         >
           <div className="h-48 w-full overflow-hidden rounded-t-md shadow-lg">
             <img
-              src={country.flags.svg ? country.flags.svg : country.flags.png}
-              alt={country.name.common}
-              className="w-full h-full object-cover bg-center "
+              src={`https://flagcdn.com/w320/${country.codes.alpha_2.toLowerCase()}.png`}
+              alt={country.names.common}
+              className="w-full h-full object-cover bg-center"
             />
           </div>
 
           <div className=" px-6 pb-8 pt-4  ">
-            <h2 className="fontBoldest pb-4  text-lg">{country.name.common}</h2>
+            <h2 className="fontBoldest pb-4  text-lg">
+              {country.names.common}
+            </h2>
             <p className="fontBold">
               Population:{" "}
               <span className="fontRegular">
@@ -32,13 +34,11 @@ const Card = ({ filteredCountries, setSelectedCountry }) => {
               </span>
             </p>
             <p className="fontBold">
-              Region:{" "}
-              <span className="fontRegular">
-                {getRegion(country.subregion)}
-              </span>
+              Region:{" "} {country.region}
+             
             </p>
             <p className="fontBold pb-2">
-              Capital: <span className="fontRegular">{country.capital}</span>
+              Capital: <span className="fontRegular">{country.capitals[0].name}</span>
             </p>
           </div>
         </div>

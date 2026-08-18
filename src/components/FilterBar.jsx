@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 const FilterBar = ({ filter, setFilter }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
-
+  const regions = ["all", "Africa", "Americas", "Asia", "Europe", "Oceania"];
+ 
+  
   return (
     <div className="relative w-[70%] max-w-[200px] elements-bg mb-2 rounded-[5px]">
       {/* Custom select button */}

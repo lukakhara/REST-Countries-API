@@ -10,7 +10,7 @@ const Detail = ({ selectedCountry, countries, setSelectedCountry }) => {
   useEffect(() => {
     const map = {};
     countries.forEach((country) => {
-      map[country.name.common.toLowerCase()] = country;
+      map[country.names.common.toLowerCase()] = country;
     });
     setCountryMap(map);
   }, [countries]);
@@ -23,8 +23,10 @@ const Detail = ({ selectedCountry, countries, setSelectedCountry }) => {
     if (!borderCodes || borderCodes.length === 0) return [];
 
     return borderCodes.map((code) => {
-      const borderCountry = countries.find((country) => country.cca3 === code);
-      return borderCountry ? borderCountry.name.common : code;
+      const borderCountry = countries.find(
+        (country) => country.codes.alpha_3 === code
+      );
+      return borderCountry ? borderCountry.names.common : code;
     });
   };
 
@@ -55,26 +57,28 @@ const Detail = ({ selectedCountry, countries, setSelectedCountry }) => {
       >
         <img
           src={
-            selectedCountry.flags?.svg || "https://via.placeholder.com/320x213"
+            selectedCountry.codes?.alpha_2
+              ? `https://flagcdn.com/w640/${selectedCountry.codes.alpha_2.toLowerCase()}.png`
+              : "https://via.placeholder.com/320x213"
           }
-          alt="Country Flag"
+          alt={`Flag of ${selectedCountry.names?.common || "country"}`}
           className=" w-full max-w-[580px] flex-1 bg-contain  h-auto  shadow-lg"
           width={400}
           height={340}
         />
         <div className="w-full  md:w-2/3 flex flex-col gap-10 flex-1">
           <h2 className="text-2xl fontBoldest ">
-            {selectedCountry.name?.common || "Unknown Country"}
+            {selectedCountry.names?.common || "Unknown Country"}
           </h2>
           <div className="xl:flex gap-4 justify-between flex-wrap ">
             <div className="">
               <p className="mb-2">
-                <strong>Native Name:</strong>{" "}
-                {selectedCountry.name.official || "N/A"}
+                <strong>Official Name:</strong>{" "}
+                {selectedCountry.names?.official || "N/A"}
               </p>
               <p className="mb-2">
                 <strong>Population:</strong>{" "}
-                {selectedCountry.population.toLocaleString() || "N/A"}
+                {selectedCountry.population?.toLocaleString() || "N/A"}
               </p>
               <p className="mb-2">
                 <strong>Region:</strong>{" "}
@@ -85,26 +89,25 @@ const Detail = ({ selectedCountry, countries, setSelectedCountry }) => {
                 {selectedCountry.subregion || "N/A"}
               </p>
               <p className="mb-2">
-                <strong>Capital:</strong> {selectedCountry.capital || "N/A"}
+                <strong>Capital:</strong>{" "}
+                {selectedCountry.capitals?.[0]?.name || "N/A"}
               </p>
             </div>
             <div className="">
               <p className="mb-2">
                 <strong>Top Level Domain:</strong>{" "}
-                {selectedCountry.tld || "N/A"}
+                {selectedCountry.tlds?.[0] || "N/A"}
               </p>
               <p className="mb-2">
                 <strong>Currencies:</strong>{" "}
-                {selectedCountry.currencies
-                  ? Object.values(selectedCountry.currencies)
-                      .map((c) => c.name)
-                      .join(", ")
+                {selectedCountry.currencies && selectedCountry.currencies.length > 0
+                  ? selectedCountry.currencies.map((c) => c.name).join(", ")
                   : "N/A"}
               </p>
               <p className="mb-2">
                 <strong>Languages:</strong>{" "}
-                {selectedCountry.languages
-                  ? Object.values(selectedCountry.languages).join(", ")
+                {selectedCountry.languages && selectedCountry.languages.length > 0
+                  ? selectedCountry.languages.map((l) => l.name).join(", ")
                   : "N/A"}
               </p>
             </div>
