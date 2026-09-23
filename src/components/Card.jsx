@@ -33,12 +33,10 @@ const Card = ({ filteredCountries, setSelectedCountry }) => {
                 {country.population.toLocaleString()}
               </span>
             </p>
-            <p className="fontBold">
-              Region:{" "} {country.region}
-             
-            </p>
+            <p className="fontBold">Region: {country.region}</p>
             <p className="fontBold pb-2">
-              Capital: <span className="fontRegular">{country.capitals[0].name}</span>
+              Capital:{" "}
+              <span className="fontRegular">{country.capitals[0]?.name}</span>
             </p>
           </div>
         </div>
